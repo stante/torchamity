@@ -27,13 +27,13 @@ class Learner:
       result['loss'].append(loss_epoch / len(train_loader))
 
       self.model.eval()
-      xs = []
-      ys = []
       for x, y in val_loader:
         preds = self.model(x)
-        xs.append(torch.argmax(preds, dim=-1))
-        ys.append(y)
 
-      accuracy(torch.cat(xs), torch.cat(ys), result)
+        for metric in val_metrics:
+          metric.update(torch.argmax(preds, dim=-1), y)
+
+      for metric in val_metrics:
+        result.get(metric.name, []).append(metric.result())
 
     return result

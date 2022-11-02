@@ -1,10 +1,18 @@
-def accuracy(pred, y, result):
-  def _accuracy(pred, y, result=None):
-    return (pred == y).float().mean().item()
-  
-  acc = _accuracy(pred, y)
+class Accuracy:
+  """Calculates accuracy metric.
+  """
+  def __init__(self, name='acc'):
+    self.name = name
+    self.reset()
 
-  if 'acc' not in result:
-    result['acc'] = []
+  def update(self, y_true, y_pred):
+    self.total += (y_true == y_pred).float().mean().item()
+    self.count += 1
 
-  result['acc'].append(acc)
+  def result(self):
+    return self.total / self.count
+
+  def reset(self):
+    self.total = 0
+    self.count = 0
+

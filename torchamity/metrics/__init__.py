@@ -10,7 +10,10 @@ class Accuracy:
     self.count += 1
 
   def result(self):
-    return self.total / self.count
+    if self.count == 0:
+      return 0
+    else:
+      return self.total / self.count
 
   def reset(self):
     self.total = 0

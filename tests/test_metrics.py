@@ -2,13 +2,16 @@ import pytest
 import torch
 from torchamity.metrics import Accuracy
 
+
 @pytest.fixture
 def tensors75():
     return [torch.Tensor([1, 1, 1, 1]), torch.Tensor([0, 1, 1, 1])]
 
+
 @pytest.fixture
 def tensors25():
     return [torch.Tensor([0, 0, 0, 0]), torch.Tensor([1, 1, 1, 0])]
+
 
 @pytest.fixture
 def tensors0():

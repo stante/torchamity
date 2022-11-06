@@ -11,8 +11,12 @@ class Learner:
         self.loss_fn = loss_fn
         self.model = model
 
-    def fit(self, epochs, val_metrics=[]):
+    def fit(self, epochs, metrics=[], val_metrics=[]):
         result = {'loss': []}
+
+        for metric in metrics:
+            result.setdefault(metic.name, [])
+            
         for metric in val_metrics:
             result.setdefault(metric.name, [])
 

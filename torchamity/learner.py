@@ -34,7 +34,7 @@ class Learner:
             result = {'loss': []}
 
             for metric in metrics:
-                result.setdefault(metic.name, [])
+                result.setdefault(metric.name, [])
             
             for metric in val_metrics:
                 result.setdefault(metric.name, [])

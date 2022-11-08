@@ -21,7 +21,7 @@ class Learner:
 
             for metric in metrics:
                 metric.update(torch.argmax(preds, dim=-1), y)
-            
+
             return loss.item()
 
         def _val_batch(x, y):
@@ -35,18 +35,19 @@ class Learner:
 
             for metric in metrics:
                 result.setdefault(metric.name, [])
-            
+
             for metric in val_metrics:
                 result.setdefault(metric.name, [])
 
             return result
-            
+
         result = _prepare_result()
 
         train_loader = DataLoader(self.train, batch_size=16, shuffle=True)
         val_loader = DataLoader(self.val, batch_size=16, shuffle=True)
 
-        for epoch in tqdm(range(1, epochs + 1)):
+        pbar = tqdm(range(1, epochs + 1), bar_format = "{n_fmt}/{total_fmt} |{bar}| [{elapsed}<{remaining}, {rate_fmt}{postfix}]")
+        for epoch in pbar:
             loss_epoch = 0
             self.model.train()
 
@@ -59,6 +60,12 @@ class Learner:
             self.model.eval()
             for x, y in val_loader:
                 _val_batch(x, y)
+
+            postfix = [f"loss={loss_epoch:.4f}"]
+            postfix.extend([f"{metric.name}={metric.result():.4f}" for metric in metrics])
+            postfix.extend([f"val_{metric.name}={metric.result():.4f}" for metric in val_metrics])
+
+            pbar.set_postfix_str(', '.join(postfix))
 
             for metric in val_metrics:
                 result[metric.name].append(metric.result())

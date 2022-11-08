@@ -46,7 +46,7 @@ class Learner:
         train_loader = DataLoader(self.train, batch_size=16, shuffle=True)
         val_loader = DataLoader(self.val, batch_size=16, shuffle=True)
 
-        pbar = tqdm(range(1, epochs + 1), bar_format = "{n_fmt}/{total_fmt} |{bar}| [{elapsed}<{remaining}, {rate_fmt}{postfix}]")
+        pbar = tqdm(range(1, epochs + 1), bar_format="{n_fmt}/{total_fmt} |{bar}| [{elapsed}<{remaining}, {rate_fmt}{postfix}]")
         for epoch in pbar:
             loss_epoch = 0
             self.model.train()

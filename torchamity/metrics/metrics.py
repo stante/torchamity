@@ -16,7 +16,7 @@ class Mean:
             count = self.count
             if reset:
                 self.reset()
-                
+
             return total / count
 
     def reset(self):

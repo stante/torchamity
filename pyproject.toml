@@ -1,0 +1,19 @@
+[project]
+name = "torchamity"
+version = "0.0.1"
+authors = [
+    { name = "Alexander Stante", email="stante@gmail.com"}
+]
+description = "Addition high level classes and methods for PyTorch"
+requires-python = ">= 3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Bug Tracker" = "https://github.com/stante/torchamity/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

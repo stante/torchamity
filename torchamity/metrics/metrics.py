@@ -8,14 +8,12 @@ class Mean:
     def update(self, *args):
         raise NotImplementedError("Must be implemented in subclass.")
 
-    def result(self, reset=True):
+    def result(self):
         if self.count == 0:
             return 0
         else:
             total = self.total
             count = self.count
-            if reset:
-                self.reset()
 
             return total / count
 

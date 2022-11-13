@@ -49,7 +49,7 @@ def test_learner_epochs(learner):
     assert len(result['loss']) == 3
 
 
-def test_learner_metrics(learner):
+def test_learner_val_metrics(learner):
     result = learner.fit(3, val_metrics=[Accuracy()])
 
-    assert len(result['acc']) == 3
+    assert len(result['val_acc']) == 3

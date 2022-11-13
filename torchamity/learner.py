@@ -37,7 +37,7 @@ class Learner:
                 result.setdefault(metric.name, [])
 
             for metric in val_metrics:
-                result.setdefault(metric.name, [])
+                result.setdefault('val_' + metric.name, [])
 
             return result
 
@@ -49,18 +49,21 @@ class Learner:
         pbar = tqdm(range(1, epochs + 1), bar_format="{n_fmt}/{total_fmt} |{bar}| [{elapsed}<{remaining}, {rate_fmt}{postfix}]")
         for epoch in pbar:
             loss_epoch = 0
-            self.model.train()
 
+            # Reset the metrics
+            for metric in val_metrics:
+                metric.reset()
+
+            self.model.train()
             for x, y in train_loader:
                 loss = _train_batch(x, y)
                 loss_epoch += loss
-
-            result['loss'].append(loss_epoch / len(train_loader))
 
             self.model.eval()
             for x, y in val_loader:
                 _val_batch(x, y)
 
+            result['loss'].append(loss_epoch)
             postfix = [f"loss={loss_epoch:.4f}"]
             postfix.extend([f"{metric.name}={metric.result():.4f}" for metric in metrics])
             postfix.extend([f"val_{metric.name}={metric.result():.4f}" for metric in val_metrics])
@@ -68,6 +71,6 @@ class Learner:
             pbar.set_postfix_str(', '.join(postfix))
 
             for metric in val_metrics:
-                result[metric.name].append(metric.result())
+                result['val_' + metric.name].append(metric.result())
 
         return result
